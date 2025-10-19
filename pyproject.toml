@@ -7,6 +7,10 @@ requires-python = ">=3.10"
 dependencies = [
     "ipykernel>=7.0.1",
     "matplotlib>=3.10.7",
+    "networkx>=3.4.2",
+    "pandas>=2.3.3",
     "rerun-notebook>=0.26.0",
     "rerun-sdk>=0.26.0",
+    "scipy>=1.15.3",
+    "trimesh>=4.8.3",
 ]
