@@ -14,3 +14,7 @@ dependencies = [
     "scipy>=1.15.3",
     "trimesh>=4.8.3",
 ]
+
+
+[tool.uv.build-backend.wheel.include]
+"threed_comp/*.csv" = "threed_comp/*.csv"
