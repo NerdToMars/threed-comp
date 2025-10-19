@@ -1,0 +1,12 @@
+[project]
+name = "threed-comp"
+version = "0.1.0"
+description = "A threed-comp project"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "ipykernel>=7.0.1",
+    "matplotlib>=3.10.7",
+    "rerun-notebook>=0.26.0",
+    "rerun-sdk>=0.26.0",
+]
