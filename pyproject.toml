@@ -20,4 +20,4 @@ build-backend = 'hatchling.build'
 requires = ['hatchling']
 
 [tool.hatch.build.targets.wheel.force-include]
-"threed_comp/*.csv" = "threed_comp/*.csv"
+"threed_comp/metadata_modelnet10.csv" = 'threed_comp/metadata_modelnet10.csv'
