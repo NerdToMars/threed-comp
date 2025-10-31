@@ -1,6 +1,8 @@
 # VAE model implementation from https://www.kaggle.com/code/tasadanluca/3d-object-morphing#Building-the-VAE-model
 import tensorflow as tf
-from tensorflow.keras import layers, keras, backend as K
+from tensorflow.keras import layers
+import keras
+from tensorflow.keras import backend as K
 from tensorflow.keras.regularizers import l2
 
 L2_WEIGHT = 1e-5
@@ -35,8 +37,7 @@ def scaled_sigmoid_activation(x):
 # In this cell I will introduce some hyperparameters and methods that mostly prevent the model from learning that
 # an empty space produces the best loss, as I had this problem in my earlier versions.
 # Thus I will introduce L2 regularization and a new weighted loss functions
-from tensorflow.keras import backend as K
-from tensorflow.keras.regularizers import l2
+
 
 L2_WEIGHT = 1e-5
 GAMMA = 0.97
