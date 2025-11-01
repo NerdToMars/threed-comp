@@ -283,3 +283,55 @@ def point_cloud_features(points: np.ndarray, radial_bins: int = 32):
     r = np.linalg.norm(pts, axis=1)
     hist, _ = np.histogram(r, bins=radial_bins, range=(0.0, 1.0), density=True)
     return np.concatenate([evals, hist])  # 3 + radial_bins dims
+
+
+def analyze_mesh_complexity(object_path):
+    """
+    Analyze the complexity of a 3D mesh by reading its geometric properties
+    """
+    try:
+        verts, faces = read_off(object_path)
+
+        # Basic geometric properties
+        num_vertices = len(verts)
+        num_faces = len(faces)
+
+        # Calculate bounding box dimensions
+        min_coords = verts.min(axis=0)
+        max_coords = verts.max(axis=0)
+        bbox_dims = max_coords - min_coords
+        bbox_volume = np.prod(bbox_dims)
+
+        # Calculate surface area (approximate)
+        # For triangular meshes, we can calculate area of each triangle
+        if len(faces) > 0 and faces.shape[1] == 3:
+            # Get triangle vertices
+            v0 = verts[faces[:, 0]]
+            v1 = verts[faces[:, 1]]
+            v2 = verts[faces[:, 2]]
+
+            # Calculate cross products for area calculation
+            cross_products = np.cross(v1 - v0, v2 - v0)
+            triangle_areas = 0.5 * np.linalg.norm(cross_products, axis=1)
+            surface_area = np.sum(triangle_areas)
+        else:
+            surface_area = 0
+
+        # Calculate aspect ratio (max dimension / min dimension)
+        aspect_ratio = np.max(bbox_dims) / np.min(bbox_dims) if np.min(bbox_dims) > 0 else 1
+
+        # Calculate vertex density (vertices per unit volume)
+        vertex_density = num_vertices / bbox_volume if bbox_volume > 0 else 0
+
+        return {
+            'num_vertices': num_vertices,
+            'num_faces': num_faces,
+            'bbox_volume': bbox_volume,
+            'surface_area': surface_area,
+            'aspect_ratio': aspect_ratio,
+            'vertex_density': vertex_density,
+            'faces_per_vertex': num_faces / num_vertices if num_vertices > 0 else 0
+        }
+    except Exception as e:
+        print(f"Error analyzing {object_path}: {e}")
+        return None
